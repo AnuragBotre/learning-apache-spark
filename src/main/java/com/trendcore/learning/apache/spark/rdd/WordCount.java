@@ -1,4 +1,4 @@
-package com.trendcore.learning.apache.spark;
+package com.trendcore.learning.apache.spark.rdd;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
