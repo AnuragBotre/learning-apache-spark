@@ -5,12 +5,6 @@ import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import scala.Tuple1;
-import scala.Tuple2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class SkipNRowsFromRdd {
 
@@ -21,6 +15,12 @@ public class SkipNRowsFromRdd {
         JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
         JavaRDD<String> firstHostRdd = sparkContext.textFile("in/nasa_19950701.tsv");
 
-        //firstHostRdd.mapPartitionsWithIndex();
+        firstHostRdd.mapPartitionsWithIndex((v1, v2) -> {
+            if(v1 == 0){
+                String next = v2.next();
+                System.out.println("This will skipped :: " + next);
+            }
+            return v2;
+        },true).foreach(s -> System.out.println(s));
     }
 }
