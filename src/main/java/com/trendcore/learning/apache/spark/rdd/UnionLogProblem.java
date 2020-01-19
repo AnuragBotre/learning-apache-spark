@@ -44,6 +44,9 @@ public class UnionLogProblem {
 
         headerRemovedFromRdd1
                 .union(headerRemovedFromRdd2)
+
+                //https://stackoverflow.com/questions/41787775/rdd-sample-in-spark
+                //for sample with replacement or without replacement
                 .sample(true, 0.1)
                 .saveAsTextFile("output/sample_nasa_logs.tsv");
 
