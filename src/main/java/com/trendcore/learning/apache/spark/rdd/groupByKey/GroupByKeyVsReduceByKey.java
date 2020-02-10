@@ -38,7 +38,7 @@ public class GroupByKeyVsReduceByKey {
 
         rdd1.map(v1 -> {
             String[] split = v1.split(",");
-            return new Tuple2(split[3], split[1]);
+            return new Tuple2<>(split[3], split[1]);
         })
                 .groupBy(v1 -> v1._1)
                 .collectAsMap()
