@@ -91,6 +91,14 @@ public class JoinOperations {
              */
             System.out.println(stringTuple2Tuple2._1 + " " + stringTuple2Tuple2._2);
         });
+
+        /**
+         * Cross Join
+         */
+        System.out.println("---------------------- Cross Join ---------------------- ");
+        ages.cartesian(addresses).foreach(tuple2Tuple2Tuple2 -> {
+            System.out.println(tuple2Tuple2Tuple2._1 + " " + tuple2Tuple2Tuple2._2);
+        });
     }
 
 }
