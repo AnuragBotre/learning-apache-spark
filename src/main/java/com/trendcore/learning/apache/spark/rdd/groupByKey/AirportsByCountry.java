@@ -1,8 +1,6 @@
 package com.trendcore.learning.apache.spark.rdd.groupByKey;
 
-import groovy.lang.Tuple;
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
@@ -10,7 +8,6 @@ import scala.Tuple2;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Create a Spark program to read the airport data from in/airports.text,
