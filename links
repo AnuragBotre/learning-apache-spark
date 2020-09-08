@@ -1,3 +1,27 @@
+Full outer join
+
+Partitioning in spark
+https://www.dezyre.com/article/how-data-partitioning-in-spark-helps-achieve-more-parallelism/297
+https://luminousmen.com/post/spark-partitions
+https://luminousmen.com/
+
+https://blog.cloudera.com/how-to-tune-your-apache-spark-jobs-part-1/
+https://blog.cloudera.com/how-to-tune-your-apache-spark-jobs-part-2/
+
+https://github.com/JerryLead/SparkInternals/blob/master/markdown/english/5-Architecture.md
+
+https://intellipaat.com/community/6632/what-are-workers-executors-cores-in-spark-standalone-cluster
+
+https://blog.knoldus.com/understanding-the-working-of-spark-driver-and-executor/
+https://stackoverflow.com/questions/48800434/spark-executors-are-they-java-processes/48824319
+https://stackoverflow.com/questions/32621990/what-are-workers-executors-cores-in-spark-standalone-cluster
+- Spark Executors - Are they java processes?
+- Yes they are separate JVm - refer ExecutorRunner.scala and Worker.scala
+
+https://freecontent.manning.com/running-spark-an-overview-of-sparks-runtime-architecture/
+
+https://www.edureka.co/blog/interview-questions/top-apache-spark-interview-questions-2016/
+
 https://github.com/Stratio/sparta
 
 https://acadgild.com/blog/spark-use-case-olympics-data-analysis
