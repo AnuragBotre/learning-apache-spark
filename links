@@ -5,6 +5,15 @@ https://www.dezyre.com/article/how-data-partitioning-in-spark-helps-achieve-more
 https://luminousmen.com/post/spark-partitions
 https://luminousmen.com/
 
+https://www.youtube.com/watch?v=LDdA1RW_6xo
+- Wide vs Narrow Dependencies.
+This video also explains how RDDs are in memory and DAG / lineage graph
+
+
+Need to add in notes - which transformation preserve partitioning and what is the reason
+https://www.youtube.com/watch?v=AK1khvHMUvE
+
+
 https://blog.cloudera.com/how-to-tune-your-apache-spark-jobs-part-1/
 https://blog.cloudera.com/how-to-tune-your-apache-spark-jobs-part-2/
 
