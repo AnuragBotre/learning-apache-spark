@@ -1,3 +1,14 @@
+-- How to Connect Spark to Your Own Datasource
+https://databricks.com/session/how-to-connect-spark-to-your-own-datasource
+
+https://docs.databricks.com/_static/notebooks/complex-nested-structured.html
+
+https://learnsql.com/blog/sql-window-functions-examples/
+https://www.mysqltutorial.org/mysql-window-functions/
+
+https://mungingdata.com/apache-spark/aggregations/
+https://sparkbyexamples.com/spark/using-groupby-on-dataframe/
+
 Full outer join
 
 Partitioning in spark
