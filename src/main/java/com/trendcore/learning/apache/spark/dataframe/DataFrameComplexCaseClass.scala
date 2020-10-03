@@ -134,6 +134,78 @@ object DataFrameComplexCaseClass {
       .where($"devices.cca3" === "USA")
       .orderBy($"devices.signal".desc , $"devices.temp".desc)
       .show(false);
+
+    /**
+     * Nested structure.
+     * */
+
+    val schema = new StructType()
+                .add("dc_id",StringType)
+                .add("source",MapType(
+                  StringType,new StructType()
+                          .add("id",StringType)
+                          .add("description",StringType)
+                          .add("temp",LongType)
+                          .add("geo",new StructType()
+                              .add("lat",DoubleType)
+                              .add("long",DoubleType)
+                          )
+                )
+            );
+
+    val dataFrameWithRespectToAboveSchema = Seq(
+      """ {
+        |"dc_id": "dc-101",
+        |"source": {
+            |"sensor-igauge": {"id": 10,
+                      |"description": "Sensor attached to the container ceilings","temp":35},
+            |"sensor-ipad":{"id": 13,
+                      |"description": "Sensor ipad attached to carbon cylinders","temp":34},
+            |"sensor-inest":{"id": 8,
+                      |"description": "Sensor attached to the factory ceilings","temp":40}
+            |}
+        |}""".stripMargin).toDS()
+
+    dataFrameWithRespectToAboveSchema.printSchema()
+
+    dataFrameWithRespectToAboveSchema.show(false)
+
+    val complexSchemaDataFrame = session
+                                .read
+                                .schema(schema)
+                                .json(dataFrameWithRespectToAboveSchema.rdd)
+
+    complexSchemaDataFrame.printSchema()
+
+    complexSchemaDataFrame.show(false);
+
+    /*
+        explode()  API.  This API will give new row for each element in the Map column.
+        In this case the map column is source with 3 keys
+        namely sensor-igauge , sensor-ipad  , sensor-inest
+     */
+
+    val explodedDF = complexSchemaDataFrame
+                        .select($"dc_id",explode($"source"))
+
+    explodedDF.printSchema()
+
+    explodedDF.show(false)
+
+
+    val notifydevicesDataSet = explodedDF.select(
+      $"dc_id".as("dcId"),
+      $"key".as("deviceType"),
+      'value.getItem("temp") as 'temp,
+      'value.getItem("description") as 'deviceDescription
+    ).as[DeviceAlert]
+
+    notifydevicesDataSet.printSchema()
+
+    notifydevicesDataSet.show(false)
   }
+
+  case class DeviceAlert(dcId: String, deviceType:String, temp:Long, deviceDescription: String)
+
 
 }
