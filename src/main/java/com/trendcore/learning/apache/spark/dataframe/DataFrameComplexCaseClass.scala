@@ -112,6 +112,12 @@ object DataFrameComplexCaseClass {
 
     eventsDF.show(false)
 
+    eventsDF.createOrReplaceTempView("eventsDF");
+
+    session
+      .sql("SELECT devices.battery_level,  devices.ip , devices.signal " +
+        " FROM eventsDF").show(false);
+
     eventsDF
       .select($"devices.battery_level",$"devices.ip",$"devices.signal")
       .show(false);
@@ -203,6 +209,22 @@ object DataFrameComplexCaseClass {
     notifydevicesDataSet.printSchema()
 
     notifydevicesDataSet.show(false)
+
+    explodedDF.createOrReplaceTempView("explodedDF");
+
+    explodedDF.printSchema()
+
+    session
+      .sql("SELECT * "
+        + " FROM explodedDF")
+      .show(false)
+
+    session
+      .sql("SELECT dc_id, key , " +
+        " value['temp'] as temp , " +
+        " value['description'] as deviceDescription " +
+        " FROM explodedDF")
+      .show(false)
   }
 
   case class DeviceAlert(dcId: String, deviceType:String, temp:Long, deviceDescription: String)
