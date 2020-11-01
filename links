@@ -1,3 +1,20 @@
+https://blog.knoldus.com/startdeploy-apache-spark-application-programmatically-using-spark-launcher/
+-- submitting spark job programatically
+
+https://towardsdatascience.com/the-art-of-joining-in-spark-dcbd33d693c
+
+https://docs.databricks.com/data/data-sources/sql-databases.html
+https://docs.databricks.com/data/data-sources/sql-databases.html#jdbc-parallelism
+
+https://opensource.com/article/19/3/apache-spark-and-dataframes-tutorial
+-- This needs to be checked.
+
+https://apacheignite-fs.readme.io/docs/ignite-data-frame
+-- Ignite DataFrame Spark DataFrames support by Ignite
+
+https://www.youtube.com/watch?v=MygFqen8VsM
+https://medium.com/analytics-vidhya/spark-hierarchy-953c1eb56a81
+
 -- How to Connect Spark to Your Own Datasource
 Extending Spark SQL 2 4 with New Data Sources Live Coding Session -Jacek Laskowski - Part - 1
 https://www.youtube.com/watch?v=YKkgVEgn2JE
