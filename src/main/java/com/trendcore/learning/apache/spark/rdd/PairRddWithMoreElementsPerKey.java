@@ -1,5 +1,7 @@
 package com.trendcore.learning.apache.spark.rdd;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -9,6 +11,7 @@ import scala.Tuple2;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class PairRddWithMoreElementsPerKey {
 
@@ -54,6 +57,9 @@ public class PairRddWithMoreElementsPerKey {
 
     public static void main(String[] args) {
 
+        Logger.getLogger("org").setLevel(Level.OFF);
+        Logger.getLogger("akka").setLevel(Level.OFF);
+
         SparkConf sparkConf = new SparkConf()
                 .setAppName("PairRddWithMoreElements")
                 .setMaster("local[*]");
@@ -76,6 +82,9 @@ public class PairRddWithMoreElementsPerKey {
         personPairRdd.foreach(s ->
                 System.out.println(s._1 + " " + s._2));
 
+        Scanner scanner = new Scanner(System.in);
+        scanner.next();
+
         List<PersonInfo> personInfoList = new ArrayList<>();
         personInfoList.add(new PersonInfo("Adam",20));
         personInfoList.add(new PersonInfo("Adam",21));
@@ -83,7 +92,9 @@ public class PairRddWithMoreElementsPerKey {
         personInfoList.add(new PersonInfo("John",23));
 
         JavaRDD<PersonInfo> personInfoJavaRDD = sparkContext.parallelize(personInfoList);
-        JavaPairRDD<String, PersonInfo> personInfoPairRDD = personInfoJavaRDD.mapToPair(personInfo -> new Tuple2<>(personInfo.username, personInfo));
+        JavaPairRDD<String, PersonInfo> personInfoPairRDD
+                = personInfoJavaRDD
+                    .mapToPair(personInfo -> new Tuple2<>(personInfo.username, personInfo));
 
         JavaPairRDD<String, Tuple2<Person, PersonInfo>> join = personPairRdd.join(personInfoPairRDD);
 

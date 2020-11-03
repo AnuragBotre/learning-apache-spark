@@ -36,7 +36,7 @@ public class SparkHandsOnExample1 {
         JavaSparkContext javaSparkContext = new JavaSparkContext(sparkConf);
 
         JavaRDD<String> rdd = javaSparkContext
-                .textFile("in/kddcup.data_10_percent.gz");
+                .textFile("in/kddcup.data.gz");
 
         JavaRDD<String[]> map = rdd.map(v1 -> v1.split(","));
 

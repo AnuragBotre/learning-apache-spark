@@ -1,3 +1,32 @@
+The foreach action in Spark is designed like a forced
+ map (so the "map" action occurs on the executors).
+ Foreach is useful for a couple of operations in Spark.
+ They are required to be used when you want to guarantee an accumulator's value to be correct.
+ In addition, they can be used when you want to move data to an external system,
+ like a database, though typically a foreachPartition is used for that operation.
+
+ To add to Joe's response, one more thing to note here is that
+ foreach() action doesn't return anything.
+  So if you want to invoke any transformations on your RDDs on executors without
+  returning anything back to driver, you can invoke them
+  using foreach() action which is not normally possible with other actions apart from saveAsxxx() actions.
+
+  foreach is an action in spark. It basically takes each element of the RDD and applies a function to that element.
+
+  foreach is performed on the executor nodes or worker nodes.
+  It does not get applied on the driver node.
+https://community.cloudera.com/t5/Support-Questions/In-spark-why-foreach-is-designed-as-an-action/td-p/120916
+https://stackoverflow.com/questions/62043315/apache-spark-take-action-on-executors-in-fully-distributed-mode
+
+
+Save as text file - does not send data to driver program like collect instead it will save
+data on the nodes. That is, saveAsTextFile is distributed.
+https://stackoverflow.com/questions/29600293/spark-save-files-distributedly
+
+https://www.waitingforcode.com/apache-spark/apache-spark-data-bigger-than-memory/read
+
+https://www.waitingforcode.com/apache-spark-sql/dataframe-file-bigger-available-memory/read
+
 https://blog.knoldus.com/startdeploy-apache-spark-application-programmatically-using-spark-launcher/
 -- submitting spark job programatically
 

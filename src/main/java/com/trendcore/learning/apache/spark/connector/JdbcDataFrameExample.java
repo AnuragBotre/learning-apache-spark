@@ -14,8 +14,8 @@ public class JdbcDataFrameExample {
 
     public static void main(String[] args) throws AnalysisException {
 
-        //Logger.getLogger("org").setLevel(Level.OFF);
-        //Logger.getLogger("akka").setLevel(Level.OFF);
+        Logger.getLogger("org").setLevel(Level.OFF);
+        Logger.getLogger("akka").setLevel(Level.OFF);
         //http://192.168.1.11:4040/
         //http://localhost:4040/
 
@@ -35,15 +35,17 @@ public class JdbcDataFrameExample {
         actors.createOrReplaceTempView("actors");
 
         actors.printSchema();
-        actors.show();
+        //actors.show();
 
-        Dataset<Row> repartitionedActorsDataFrame = actors.repartition(2);
+        //Dataset<Row> repartitionedActorsDataFrame = actors.repartition(2);
 
-        repartitionedActorsDataFrame.show();
+        //repartitionedActorsDataFrame.show();
 
         Dataset<Row> sql = sparkSession.sql("SELECT * FROM actors a where a.actor_id > 30 ");
 
-        sql.show(false);
+        sql.foreach(row -> {
+            System.out.println(row.get(0) + " " + row.get(1) + " " + row.get(2) + " " + row.get(3));
+        });
 
         Scanner scanner = new Scanner(System.in);
         scanner.next();
