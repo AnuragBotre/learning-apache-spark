@@ -1,28 +1,23 @@
 package com.trendcore.learning.apache.spark.dataframe;
 
-import com.sun.tools.javac.code.TypeTag;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.api.java.UDF2;
 import org.apache.spark.sql.catalyst.ScalaReflection;
 import org.apache.spark.sql.catalyst.expressions.GenericRow;
 import org.apache.spark.sql.expressions.SparkUserDefinedFunction;
 import org.apache.spark.sql.expressions.UserDefinedFunction;
-import org.apache.spark.sql.types.DataType;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructType;
-import scala.*;
+import scala.Function2;
+import scala.Option;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
-import scala.reflect.ClassTag$;
-import scala.reflect.api.TypeTags;
 
 import java.io.Serializable;
-import java.lang.Long;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
