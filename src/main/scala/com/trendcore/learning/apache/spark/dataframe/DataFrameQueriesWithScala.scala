@@ -1,7 +1,5 @@
 package com.trendcore.learning.apache.spark.dataframe
 
-import java.io.{FileReader, IOException}
-
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
@@ -11,7 +9,7 @@ object DataFrameQueriesWithScala {
    * case class is immutable in scala.
    * In case of clone provides shallow copy.
    */
-  case class Person (first_name:String,age:Int)
+  case class Person(first_name: String, age: Int)
 
   def main(args: Array[String]): Unit = {
 
@@ -25,7 +23,7 @@ object DataFrameQueriesWithScala {
     /*This line is important. Only this line will give us toDF() method.*/
     import context.implicits._
     /*Create data frame*/
-    val personDF = sparkSession.sparkContext.parallelize(List(Person("1",20) , Person("2",22))).toDF();
+    val personDF = sparkSession.sparkContext.parallelize(List(Person("1", 20), Person("2", 22))).toDF();
 
     /*Register Temporary view. Lifetime of this view is tied to SparkSession.
     If we want our table or structured to be stored and used across session then use
@@ -48,10 +46,10 @@ object DataFrameQueriesWithScala {
     frame3.show();
 
     System.out.println("--------------------------------------------------");
-    val frame4 = personDF.select("first_name","age").groupBy("first_name").count();
+    val frame4 = personDF.select("first_name", "age").groupBy("first_name").count();
     frame4.show();
 
-    val frame5 = personDF.select("first_name","age").groupBy("first_name","age").count();
+    val frame5 = personDF.select("first_name", "age").groupBy("first_name", "age").count();
     frame5.show();
 
     System.out.println("-------------------------------------------------- Frame - 6 ");
@@ -61,14 +59,14 @@ object DataFrameQueriesWithScala {
     */
     import org.apache.spark.sql.functions._
 
-    val frame6 = personDF.select("first_name","age")
-                  .groupBy("first_name")
-                  .agg(sum("age"),count("age"));
+    val frame6 = personDF.select("first_name", "age")
+      .groupBy("first_name")
+      .agg(sum("age"), count("age"));
     frame6.show();
 
-    val frame7 = personDF.select("first_name","age")
+    val frame7 = personDF.select("first_name", "age")
       .groupBy("first_name")
-      .agg(sum("age").alias("sum_age"),count("age").alias("count_age"));
+      .agg(sum("age").alias("sum_age"), count("age").alias("count_age"));
     frame7.show();
   }
 

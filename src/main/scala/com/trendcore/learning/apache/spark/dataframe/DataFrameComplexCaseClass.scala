@@ -2,8 +2,8 @@ package com.trendcore.learning.apache.spark.dataframe
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.{explode, from_json, get_json_object}
 import org.apache.spark.sql.types._
-import org.apache.spark.sql.functions._
 
 object DataFrameComplexCaseClass {
 
@@ -36,13 +36,12 @@ object DataFrameComplexCaseClass {
     import context.implicits._
 
 
-
-    case class DeviceData (id: Int, device: String)
+    case class DeviceData(id: Int, device: String)
 
     /*
       Input Data
     */
-    val eventsDS = Seq (
+    val eventsDS = Seq(
       (0, """{"device_id": 0, "device_type": "sensor-ipad", "ip": "68.161.225.1", "cca3": "USA", "cn": "United States", "temp": 25, "signal": 23, "battery_level": 8, "c02_level": 917, "timestamp" :1475600496 }"""),
       (1, """{"device_id": 1, "device_type": "sensor-igauge", "ip": "213.161.254.1", "cca3": "NOR", "cn": "Norway", "temp": 30, "signal": 18, "battery_level": 6, "c02_level": 1413, "timestamp" :1475600498 }"""),
       (2, """{"device_id": 2, "device_type": "sensor-ipad", "ip": "88.36.5.1", "cca3": "ITA", "cn": "Italy", "temp": 18, "signal": 25, "battery_level": 5, "c02_level": 1372, "timestamp" :1475600500 }"""),
@@ -51,10 +50,10 @@ object DataFrameComplexCaseClass {
       (5, """{"device_id": 5, "device_type": "sensor-istick", "ip": "204.116.105.67", "cca3": "USA", "cn": "United States", "temp": 50, "signal": 16, "battery_level": 8, "c02_level": 1574, "timestamp" :1475600506 }"""),
       (6, """{"device_id": 6, "device_type": "sensor-ipad", "ip": "220.173.179.1", "cca3": "CHN", "cn": "China", "temp": 21, "signal": 18, "battery_level": 9, "c02_level": 1249, "timestamp" :1475600508 }"""),
       (7, """{"device_id": 7, "device_type": "sensor-ipad", "ip": "118.23.68.227", "cca3": "JPN", "cn": "Japan", "temp": 27, "signal": 15, "battery_level": 0, "c02_level": 1531, "timestamp" :1475600512 }"""),
-      (8 ,""" {"device_id": 8, "device_type": "sensor-inest", "ip": "208.109.163.218", "cca3": "USA", "cn": "United States", "temp": 40, "signal": 16, "battery_level": 9, "c02_level": 1208, "timestamp" :1475600514 }"""),
-      (9,"""{"device_id": 9, "device_type": "sensor-ipad", "ip": "88.213.191.34", "cca3": "ITA", "cn": "Italy", "temp": 19, "signal": 11, "battery_level": 0, "c02_level": 1171, "timestamp" :1475600516 }"""),
-      (10,"""{"device_id": 10, "device_type": "sensor-igauge", "ip": "68.28.91.22", "cca3": "USA", "cn": "United States", "temp": 32, "signal": 26, "battery_level": 7, "c02_level": 886, "timestamp" :1475600518 }"""),
-      (11,"""{"device_id": 11, "device_type": "sensor-ipad", "ip": "59.144.114.250", "cca3": "IND", "cn": "India", "temp": 46, "signal": 25, "battery_level": 4, "c02_level": 863, "timestamp" :1475600520 }"""),
+      (8, """ {"device_id": 8, "device_type": "sensor-inest", "ip": "208.109.163.218", "cca3": "USA", "cn": "United States", "temp": 40, "signal": 16, "battery_level": 9, "c02_level": 1208, "timestamp" :1475600514 }"""),
+      (9, """{"device_id": 9, "device_type": "sensor-ipad", "ip": "88.213.191.34", "cca3": "ITA", "cn": "Italy", "temp": 19, "signal": 11, "battery_level": 0, "c02_level": 1171, "timestamp" :1475600516 }"""),
+      (10, """{"device_id": 10, "device_type": "sensor-igauge", "ip": "68.28.91.22", "cca3": "USA", "cn": "United States", "temp": 32, "signal": 26, "battery_level": 7, "c02_level": 886, "timestamp" :1475600518 }"""),
+      (11, """{"device_id": 11, "device_type": "sensor-ipad", "ip": "59.144.114.250", "cca3": "IND", "cn": "India", "temp": 46, "signal": 25, "battery_level": 4, "c02_level": 863, "timestamp" :1475600520 }"""),
       (12, """{"device_id": 12, "device_type": "sensor-igauge", "ip": "193.156.90.200", "cca3": "NOR", "cn": "Norway", "temp": 18, "signal": 26, "battery_level": 8, "c02_level": 1220, "timestamp" :1475600522 }"""),
       (13, """{"device_id": 13, "device_type": "sensor-ipad", "ip": "67.185.72.1", "cca3": "USA", "cn": "United States", "temp": 34, "signal": 20, "battery_level": 8, "c02_level": 1504, "timestamp" :1475600524 }"""),
       (14, """{"device_id": 14, "device_type": "sensor-inest", "ip": "68.85.85.106", "cca3": "USA", "cn": "United States", "temp": 39, "signal": 17, "battery_level": 8, "c02_level": 831, "timestamp" :1475600526 }"""),
@@ -82,8 +81,8 @@ object DataFrameComplexCaseClass {
     */
 
     eventsDS
-      .select($"id",get_json_object($"device","$.device_type"),
-        get_json_object($"device","$.ip").as("ip"))
+      .select($"id", get_json_object($"device", "$.device_type"),
+        get_json_object($"device", "$.ip").as("ip"))
       .show();
 
     /*
@@ -96,7 +95,7 @@ object DataFrameComplexCaseClass {
     val jsonSchema = new StructType()
       .add("battery_level", LongType)
       .add("c02_level", LongType)
-      .add("cca3",StringType)
+      .add("cca3", StringType)
       .add("cn", StringType)
       .add("device_id", LongType)
       .add("device_type", StringType)
@@ -119,26 +118,26 @@ object DataFrameComplexCaseClass {
         " FROM eventsDF").show(false);
 
     eventsDF
-      .select($"devices.battery_level",$"devices.ip",$"devices.signal")
+      .select($"devices.battery_level", $"devices.ip", $"devices.signal")
       .show(false);
 
 
     eventsDF
-      .select($"devices.battery_level",$"devices.ip",$"devices.signal")
+      .select($"devices.battery_level", $"devices.ip", $"devices.signal")
       .where($"devices.temp" > 10 and $"devices.signal" > 15)
       .show(false);
 
     eventsDF
       .select($"*")
       .where($"devices.cca3" === "USA")
-      .orderBy($"devices.signal".desc , $"devices.temp".desc)
+      .orderBy($"devices.signal".desc, $"devices.temp".desc)
       .show(false);
 
 
     eventsDF
       .select($"devices.*")
       .where($"devices.cca3" === "USA")
-      .orderBy($"devices.signal".desc , $"devices.temp".desc)
+      .orderBy($"devices.signal".desc, $"devices.temp".desc)
       .show(false);
 
     /**
@@ -146,30 +145,30 @@ object DataFrameComplexCaseClass {
      * */
 
     val schema = new StructType()
-                .add("dc_id",StringType)
-                .add("source",MapType(
-                  StringType,new StructType()
-                          .add("id",StringType)
-                          .add("description",StringType)
-                          .add("temp",LongType)
-                          .add("geo",new StructType()
-                              .add("lat",DoubleType)
-                              .add("long",DoubleType)
-                          )
-                )
-            );
+      .add("dc_id", StringType)
+      .add("source", MapType(
+        StringType, new StructType()
+          .add("id", StringType)
+          .add("description", StringType)
+          .add("temp", LongType)
+          .add("geo", new StructType()
+            .add("lat", DoubleType)
+            .add("long", DoubleType)
+          )
+      )
+      );
 
     val dataFrameWithRespectToAboveSchema = Seq(
       """ {
         |"dc_id": "dc-101",
         |"source": {
-            |"sensor-igauge": {"id": 10,
-                      |"description": "Sensor attached to the container ceilings","temp":35},
-            |"sensor-ipad":{"id": 13,
-                      |"description": "Sensor ipad attached to carbon cylinders","temp":34},
-            |"sensor-inest":{"id": 8,
-                      |"description": "Sensor attached to the factory ceilings","temp":40}
-            |}
+        |"sensor-igauge": {"id": 10,
+        |"description": "Sensor attached to the container ceilings","temp":35},
+        |"sensor-ipad":{"id": 13,
+        |"description": "Sensor ipad attached to carbon cylinders","temp":34},
+        |"sensor-inest":{"id": 8,
+        |"description": "Sensor attached to the factory ceilings","temp":40}
+        |}
         |}""".stripMargin).toDS()
 
     dataFrameWithRespectToAboveSchema.printSchema()
@@ -177,9 +176,9 @@ object DataFrameComplexCaseClass {
     dataFrameWithRespectToAboveSchema.show(false)
 
     val complexSchemaDataFrame = session
-                                .read
-                                .schema(schema)
-                                .json(dataFrameWithRespectToAboveSchema.rdd)
+      .read
+      .schema(schema)
+      .json(dataFrameWithRespectToAboveSchema)
 
     complexSchemaDataFrame.printSchema()
 
@@ -192,7 +191,7 @@ object DataFrameComplexCaseClass {
      */
 
     val explodedDF = complexSchemaDataFrame
-                        .select($"dc_id",explode($"source"))
+      .select($"dc_id", explode($"source"))
 
     explodedDF.printSchema()
 
@@ -227,7 +226,7 @@ object DataFrameComplexCaseClass {
       .show(false)
   }
 
-  case class DeviceAlert(dcId: String, deviceType:String, temp:Long, deviceDescription: String)
+  case class DeviceAlert(dcId: String, deviceType: String, temp: Long, deviceDescription: String)
 
 
 }

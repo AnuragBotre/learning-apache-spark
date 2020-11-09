@@ -1,6 +1,5 @@
 package com.trendcore.learning.apache.spark;
 
-import com.trendcore.classloader.IntermediateClassLoader;
 import org.apache.spark.SparkConf;
 
 import java.io.InputStream;
@@ -17,8 +16,8 @@ public class ClassLoadingTest{
         Properties properties = new Properties();
         properties.load(skipPackagesPropertiesFile);
 
-        IntermediateClassLoader classLoader = new IntermediateClassLoader(url,parentClassLoader, properties);
-        classLoader.invoke(ClassLoadingTest.class.getName(),args);
+        /*IntermediateClassLoader classLoader = new IntermediateClassLoader(url,parentClassLoader, properties);
+        classLoader.invoke(ClassLoadingTest.class.getName(),args);*/
     }
 
     public static void mainMethod(String[] args) {
