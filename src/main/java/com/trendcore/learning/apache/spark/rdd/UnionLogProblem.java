@@ -28,6 +28,11 @@ public class UnionLogProblem {
         JavaRDD<String> rdd1 = sparkContext.textFile("in/nasa_19950701.tsv");
         JavaRDD<String> rdd2 = sparkContext.textFile("in/nasa_19950801.tsv");
 
+        /**
+         * This solution is based on stackoverflow.
+         * https://stackoverflow.com/questions/27854919/how-do-i-skip-a-header-from-csv-files-in-spark
+         * But use filter recommended
+         */
         JavaRDD<String> headerRemovedFromRdd1 = rdd1.mapPartitionsWithIndex((v1, v2) -> {
             if (v1 == 0) {
                 v2.next();
