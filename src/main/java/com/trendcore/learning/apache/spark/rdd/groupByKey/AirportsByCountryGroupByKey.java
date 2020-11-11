@@ -51,7 +51,8 @@ public class AirportsByCountryGroupByKey {
         .mapToPair(s -> {
             String[] split = s.split(",");
             return new Tuple2<>(split[3],split);
-        }).groupByKey()
+        })
+        .groupByKey()
         .foreach(stringIterableTuple2 -> {
             String s = stringIterableTuple2._1;
             Iterable<String[]> strings = stringIterableTuple2._2;
