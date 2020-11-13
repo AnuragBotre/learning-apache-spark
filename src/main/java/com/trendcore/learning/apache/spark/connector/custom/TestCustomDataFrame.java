@@ -13,7 +13,7 @@ public class TestCustomDataFrame {
     public static void main(String[] args) {
         SparkSession sparkSession = SparkSession
                                         .builder()
-                                        .master("local[*]")
+                                        .master("spark://localhost:7077")
                                         .getOrCreate();
 
         Map map = new HashMap<>();
