@@ -55,7 +55,7 @@ public class CustomDataSourceRelation extends BaseRelation implements PrunedScan
         list.add(new GenericRow(new Object[]{3L,"Alex"}));
         list.add(new GenericRow(new Object[]{4L,"Ash"}));
 
-        RDD<Row> rowRDD = ToRDD.toRdd(sqlContext.sparkContext(), list, ClassTag.apply(Row.class));
+        RDD<Row> rowRDD = ToRDD.toRdd(sqlContext.sparkContext(), list,ClassTag.apply(Row.class));
         return rowRDD;
     }
 

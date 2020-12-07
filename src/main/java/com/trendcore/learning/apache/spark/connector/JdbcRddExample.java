@@ -20,8 +20,8 @@ public class JdbcRddExample {
 
     public static void main(String[] args) throws SQLException {
         SparkConf sparkConf = new SparkConf()
-                .setAppName("JDBC Rdd Example")
-                .setMaster("local[*]");
+                .setAppName("JDBC Rdd Example");
+                //.setMaster("local[*]");
         SparkContext sparkContext = new SparkContext(sparkConf);
 
 
